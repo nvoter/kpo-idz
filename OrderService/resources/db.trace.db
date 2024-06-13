@@ -1,0 +1,3 @@
+2024-06-13 16:30:58 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "station" not found (candidates are: "STATION"); SQL statement:
+insert into "station" (station) values ('moscow'), ('erevan') [42103-214]

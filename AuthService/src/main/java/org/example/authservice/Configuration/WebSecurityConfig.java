@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/swagger-ui/**", "/h2-console/**");
+                .antMatchers("/**");
     }
 
     @Override
@@ -45,9 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/auth/register", "/auth/login").permitAll()
-                .antMatchers("/auth/user")
-                .authenticated()
+                .antMatchers("/**").permitAll()
+//                .antMatchers("/auth/register", "/auth/login").permitAll()
+//                .antMatchers("/auth/user")
+//                .authenticated()
                 .and()
                 .apply(authConfig);
     }

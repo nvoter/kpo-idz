@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/auth")
@@ -43,9 +44,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginData loginData) {
+    public ResponseEntity<String> login(@RequestBody LoginData loginData) {
         String accessToken = userService.login(loginData);
-
+        if (Objects.equals(accessToken, "")) {
+            return new ResponseEntity<>("Authentication error", HttpStatus.UNAUTHORIZED);
+        }
         return ResponseEntity.ok("Login done \n Token: " + accessToken);
     }
 
@@ -53,7 +56,10 @@ public class AuthController {
     @GetMapping("/user")
     public ResponseEntity<?> getUserInfo(@RequestHeader String token) {
         try {
+            System.out.println("\033[31m" + token + "\033[0m");
+
             String email = jwtSource.getUsername(token);
+
             System.out.println("\033[31m" + email + "\033[0m");
 
             User user = userService.findByEmail(email).orElseThrow(UserNotFoundException::new);

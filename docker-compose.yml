@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  authservice:
+    build:
+      context: ./AuthService
+      dockerfile: Dockerfile
+    image: authservice_image
+    container_name: authservice_container
+    expose:
+      - "8080"
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./AuthService/src/main/resources/db:/app/src/main/resources/db
+
+  orderservice:
+    build:
+      context: ./OrderService
+      dockerfile: Dockerfile
+    image: orderservice_image
+    container_name: orderservice_container
+    expose:
+      - "8082"
+    ports:
+      - "127.0.0.1:8082:8082"
+    volumes:
+      - ./OrderService/src/main/resources/db:/app/src/main/resources/db

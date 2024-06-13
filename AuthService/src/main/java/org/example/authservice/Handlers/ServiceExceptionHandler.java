@@ -48,6 +48,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
 
 @RestControllerAdvice
 public class ServiceExceptionHandler {
@@ -55,13 +56,13 @@ public class ServiceExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String handleAuthException(Exception e, HttpServletResponse response) {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        return "Authentication error: " + e.getMessage();
+        return "Authentication error: " + StandardCharsets.UTF_8.encode(e.getMessage());
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleUserNotFoundException(UserNotFoundException e, HttpServletResponse response) {
         response.setStatus(HttpStatus.NOT_FOUND.value());
-        return "User not found: " + e.getMessage();
+        return "User not found: " + StandardCharsets.UTF_8.encode(e.getMessage());
     }
 }
